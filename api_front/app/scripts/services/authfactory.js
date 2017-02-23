@@ -24,7 +24,7 @@ angular.module('authFactory', [])
     };
   }])
 
-  .factory('authUser', function($auth, sessionControl, toastr, $location) {
+  .factory('authUser', function($auth, GooglePlus, sessionControl, toastr, $location) {
       var chacheSession = function(email, username, avatar){
           sessionControl.set('userIsLogin', true);
           sessionControl.set('email', email);
@@ -42,15 +42,21 @@ angular.module('authFactory', [])
       var login = function(loginForm) {
           $auth.login( loginForm).then(
               function( response){
-                chacheSession(response.data.user.email, response.data.user.name, loginForm.avatar);
-                $location.path('/');
-                //location.pathname = '/';
-                toastr.success('Bienvenido ' + sessionControl.get('username'));
-                console.log(sessionControl.get('userIsLogin') !== null);
+                if(typeof response.data.user != 'undefined'){
+                  chacheSession(response.data.user.email, response.data.user.name, loginForm.avatar);
+                  $location.path('/');
+                  //location.pathname = '/';
+                  toastr.success('Bienvenido ' + sessionControl.get('username'));
+                  console.log(sessionControl.get('userIsLogin') !== null);
+                }else{
+                  console.log(response);
+                }
               },
               function(error){
                 unCacheSession();
-                toastr.error(error.data.error, "Error");
+                if(error.data.error === 'invalid_credentials'){
+                  toastr.error('Usuario o contraseña incorrectos', "Error");
+                }
                 console.log(error);
               }
           );
@@ -66,6 +72,22 @@ angular.module('authFactory', [])
         unCacheSession();
         toastr.success('Vuelve pronto');
         $location.path('/login');
+      },
+
+      loginGooglePlus: function(){
+        GooglePlus.login().then(
+          function(){
+            GooglePlus.getUser().then(function(response){
+              var loginForm = {
+                name: response.name,
+                email: response.email,
+                avatar: response.picture
+              }
+
+              login(loginForm);
+            });
+          }
+        )
       },
 
       isLoggedIn: function(){

@@ -12,5 +12,9 @@ angular.module('apiFrontApp')
 		vm.login = function (){
 			authUser.loginApi(vm.loginForm);	
 		}
+
+		vm.loginGooglePlus = function(){
+			authUser.loginGooglePlus(); 
+		}
 	
 	});

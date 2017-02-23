@@ -35,4 +35,7 @@ angular.module('apiFrontApp')
   			name: sessionControl.get('username'),
   			avatar: sessionControl.get('avatar'),
   		}
+
+
+  		
   });

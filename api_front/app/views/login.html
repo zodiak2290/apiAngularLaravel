@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="col-sm-8 col-sm-offset-2">
+	<div class="col-sm-8 col-sm-offset-2" style="margin-top: 20%;">
 		<div class="well">
 			<h3>Login</h3>
 			<form >
@@ -9,9 +9,16 @@
 				<div class="form group">
 					<input type="password" class="form-control" placeholder="Passwrod" ng-model="login.loginForm.password">
 				</div>
-				<button class="btn btn-primary" ng-click="login.login()">
+				<button class="btn btn-block btn-primary" ng-click="login.login()">
 					Iniciar Sesión
-				</button> <br>
+				</button><br>
+				<hr>
+				<a class="btn btn-block btn-social btn-google" ng-click="login.loginGooglePlus()">
+					<i class="fa fa-google-plus"></i> Iniciar sesiön con Google
+				</a>
+				<a class="btn btn-block btn-social btn-twitter">
+					<span class="fa fa-twitter"></span> Sign in with Twitter
+				</a>
 			</form>
 		</div>
 	</div>

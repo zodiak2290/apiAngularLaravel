@@ -18,9 +18,16 @@ angular
     'ngTouch',
     'satellizer',
     'authFactory',
-    'toastr'
+    'toastr',
+    'googleplus'
   ])
-  .config(function ($routeProvider, $authProvider, $locationProvider) {
+  .config(function ($routeProvider, $authProvider, $locationProvider, GooglePlusProvider) {
+    GooglePlusProvider.init({
+        clientId: '36956286677-c0e0lei5pfkpsa4kc8jd587qpnfcce9e.apps.googleusercontent.com',
+        apiKey: 'kFbNLDcOmOBBP_e5ivHnOLHW',
+        scopes: ['email','profile']
+    })
+
     $authProvider.loginUrl = 'http://localhost:8000/api/auth_login';
 
     
